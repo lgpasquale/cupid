@@ -1,0 +1,32 @@
+cmake_minimum_required(VERSION 2.8)
+include(ExternalProject)
+include(@CUPID_DIR@/AddProjectDependency.cmake)
+include(@CUPID_DIR@/FindProjectDependency.cmake)
+
+# Only interpret if() arguments as variables or keywords when unquoted
+if (NOT ${CMAKE_VERSION} VERSION_LESS "3.1")
+    cmake_policy(SET CMP0054 NEW)
+endif()
+
+include(@DEPENDENCY_INSTALL_SCRIPT@)
+
+# Export all DEPENDENCY_*_DIR variables
+# (first create the file, so that even if no variable is exported the file exists anyway and can be loaded)
+file(WRITE ${CMAKE_BINARY_DIR}/output_variables.cmake "")
+get_cmake_property(VARIABLE_NAMES CACHE_VARIABLES)
+foreach(VARIABLE_NAME ${VARIABLE_NAMES})
+    message(STATUS "${VARIABLE_NAME}")
+    if("${VARIABLE_NAME}" MATCHES "^DEPENDENCY_.*_DIR$")
+        message(STATUS "    MATCH!!!")
+        string(REGEX REPLACE "DEPENDENCY_(.*)_DIR" "\\1" DEPENDENCY_NAME ${VARIABLE_NAME})
+        # Retrieve the description of this variable
+        #get_property(VARIABLE_HELPSTRING CACHE ${VARIABLE_NAME} PROPERTY HELPSTRING)
+        file(APPEND ${CMAKE_BINARY_DIR}/output_variables.cmake "set(${VARIABLE_NAME} \"${${VARIABLE_NAME}}\" CACHE PATH \"${DEPENDENCY_NAME} installation base directory\")\n")
+    endif()
+endforeach()
+# Export all added dependencies (so that they become dependencies of the
+# project depending on this one and are bundled with it too)
+foreach(DEPENDENCY ${DEPENDENCIES})
+    file(APPEND ${CMAKE_BINARY_DIR}/output_variables.cmake "set(SUBDEPENDENCIES ${SUBDEPENDENCIES} ${DEPENDENCY})\n"
+        "list(REMOVE_DUPLICATES SUBDEPENDENCIES)\n")
+endforeach()
