@@ -28,8 +28,8 @@ macro(INSTALL_PROJECT_DEPENDENCIES)
                 endforeach()
                 # Then look in the generic directory
                 if("${DEPENDENCY_INSTALL_SCRIPT}" STREQUAL "")
-                    if (EXISTS "${CUPID_DIR}/dependencies/scripts/Install${DEPENDENCY_NAME}.cmake")
-                        set(DEPENDENCY_INSTALL_SCRIPT "${CUPID_DIR}/dependencies/scripts/Install${DEPENDENCY_NAME}.cmake")
+                    if (EXISTS "${CUPID_DEPENDENCIES_INSTALL_SCRIPTS_DIR}/Install${DEPENDENCY_NAME}.cmake")
+                        set(DEPENDENCY_INSTALL_SCRIPT "${CUPID_DEPENDENCIES_INSTALL_SCRIPTS_DIR}/Install${DEPENDENCY_NAME}.cmake")
                     endif()
                 endif()
 
@@ -120,8 +120,8 @@ macro(INSTALL_PROJECT_DEPENDENCIES)
         endforeach()
         # Then look in the generic directory
         if("${DEPENDENCY_BUNDLE_SCRIPT}" STREQUAL "")
-            if (EXISTS "${CUPID_DIR}/packages/Bundle${DEPENDENCY_NAME}.cmake")
-                set(DEPENDENCY_BUNDLE_SCRIPT "${CUPID_DIR}/packages/Bundle${DEPENDENCY_NAME}.cmake")
+            if (EXISTS "${CUPID_DEPENDENCIES_INSTALL_SCRIPTS_DIR}/Bundle${DEPENDENCY_NAME}.cmake")
+                set(DEPENDENCY_BUNDLE_SCRIPT "${CUPID_DEPENDENCIES_INSTALL_SCRIPTS_DIR}/Bundle${DEPENDENCY_NAME}.cmake")
             endif()
         endif()
 

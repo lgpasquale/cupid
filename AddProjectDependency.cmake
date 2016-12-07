@@ -30,8 +30,8 @@ foreach(DEPENDECIES_INSTALL_SCRIPTS_DIR ${DEPENDENCIES_INSTALL_SCRIPTS_DIRS})
 endforeach()
 # Then look in the generic directory
 if("${DEPENDENCY_ADDDEPENDENCIES_SCRIPT}" STREQUAL "")
-    if (EXISTS "${CUPID_DIR}/packages/Add${DEPENDENCY_NAME}Dependencies.cmake")
-        set(DEPENDENCY_ADDDEPENDENCIES_SCRIPT "${CUPID_DIR}/packages/Add${DEPENDENCY_NAME}Dependencies.cmake")
+    if (EXISTS "${CUPID_DEPENDENCIES_INSTALL_SCRIPTS_DIR}/Add${DEPENDENCY_NAME}Dependencies.cmake")
+        set(DEPENDENCY_ADDDEPENDENCIES_SCRIPT "${CUPID_DEPENDENCIES_INSTALL_SCRIPTS_DIR}/Add${DEPENDENCY_NAME}Dependencies.cmake")
     endif()
 endif()
 

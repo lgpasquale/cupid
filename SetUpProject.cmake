@@ -6,6 +6,7 @@ endif()
 # This variable allows macros and functions to know where other cupid cmake
 # scripts are located
 set(CUPID_DIR ${CMAKE_CURRENT_LIST_DIR} CACHE INTERNAL "")
+set(CUPID_DEPENDENCIES_INSTALL_SCRIPTS_DIR ${CUPID_DIR}/dependencies/scripts CACHE INTERNAL "")
 
 #================================
 # Includes
