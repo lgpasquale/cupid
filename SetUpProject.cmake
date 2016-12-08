@@ -14,7 +14,6 @@ set(CUPID_DEPENDENCIES_INSTALL_SCRIPTS_DIR ${CUPID_DIR}/dependencies/scripts CAC
 # Include cmake scripts defining other functions and macros
 include(${CMAKE_CURRENT_LIST_DIR}/CopyFilesToBinaryDir.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/LinkFilesToBinaryDir.cmake)
-include(${CMAKE_CURRENT_LIST_DIR}/FindProjectDependency.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/AddProjectDependency.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/InstallProjectDependencies.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/FindProjectDependencies.cmake)

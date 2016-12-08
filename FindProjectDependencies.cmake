@@ -11,14 +11,7 @@ macro(FIND_PROJECT_DEPENDENCIES)
         # CMake or by the ${DEPENDENCY_NAME}Config.cmake file provided by the
         # package itself
 
-        foreach(SUBDEPENDENCY ${SUBDEPENDENCIES})
-            find_project_dependency(SUBDEPENDENCY)
-        endforeach()
         message(STATUS "    ==> Looking for ${DEPENDENCY_NAME}")
-        find_project_dependency(${DEPENDENCY_NAME})
-        # We want the user to use DEPENDENCY_${DEPENDENCY_NAME}_DIR, and not ${DEPENDENCY_NAME}_DIR,
-        # which is set by find_package
-        mark_as_advanced(${DEPENDENCY_NAME}_DIR)
 
         # CMAKE_PREFIX_PATH is where find_package, find_library and find_file
         # look for files. We set this to the user defined DEPENDENCY_<package>_DIR
@@ -49,6 +42,10 @@ macro(FIND_PROJECT_DEPENDENCIES)
         else()
             find_package(${DEPENDENCY_NAME} QUIET COMPONENTS ${DEPENDENCY_${DEPENDENCY_NAME}_COMPONENTS} ${DEPENDENCY_${DEPENDENCY_NAME}_OPTIONAL_COMPONENTS})
         endif()
+
+        # We want the user to use DEPENDENCY_${DEPENDENCY_NAME}_DIR, and not ${DEPENDENCY_NAME}_DIR,
+        # which is set by find_package
+        mark_as_advanced(${DEPENDENCY_NAME}_DIR)
 
         if(NOT ${DEPENDENCY_NAME}_FOUND)
             message(FATAL_ERROR "${DEPENDENCY_NAME} not found. Try setting DEPENDENCY_${DEPENDENCY_NAME}_DIR to the installation path of ${DEPENDENCY_NAME}")
