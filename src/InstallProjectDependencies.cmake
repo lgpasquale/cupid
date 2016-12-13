@@ -36,7 +36,7 @@ macro(INSTALL_PROJECT_DEPENDENCIES)
                 # If we have found the install script, use it to install the dependency
                 if(NOT "${DEPENDENCY_INSTALL_SCRIPT}" STREQUAL "")
                     set(DEPENDENCY_SUPERBUILD_DIR ${DEPENDENCY_BASE_DIR}/superbuild)
-                    configure_file("${CUPID_DIR}/DependencyCMakeLists.txt.in"
+                    configure_file("${CUPID_DIR}/src/DependencyCMakeLists.txt.in"
                         "${DEPENDENCY_SUPERBUILD_DIR}/CMakeLists.txt" @ONLY)
                     set(CONFIGURE_PROCESS_OUTPUT_FILE "${DEPENDENCY_SUPERBUILD_DIR}/configure_process.log")
                     set(BUILD_PROCESS_OUTPUT_FILE "${DEPENDENCY_SUPERBUILD_DIR}/build_process.log")

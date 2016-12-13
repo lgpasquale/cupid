@@ -4,7 +4,7 @@
 
 # This file configures and prepares for installation
 # ${PROJECT_NAME}Config.cmake and ${PROJECT_NAME}ConfigVersion.cmake
-include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/InstallCMakeConfigFiles.cmake)
+include(${CUPID_DIR}/src/InstallCMakeConfigFiles.cmake)
 
 #================================
 # Installer

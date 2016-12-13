@@ -39,10 +39,10 @@ file(RELATIVE_PATH REL_LIBRARY_DIR "${PROJECT_CMAKE_INSTALL_ABSOLUTE_DIR}"
 # ... for the install tree
 set(CONF_INCLUDE_DIRS "\${${PROJECT_NAME}_CMAKE_DIR}/${REL_INCLUDE_DIR}")
 set(CONF_LIBRARY_DIRS "\${${PROJECT_NAME}_CMAKE_DIR}/${REL_LIBRARY_DIR}")
-configure_file(${PROJECT_SOURCE_DIR}/cmake/ProjectConfig.cmake.in
+configure_file(${CUPID_DIR}/src/ProjectConfig.cmake.in
     "${PROJECT_BINARY_DIR}/${PROJECT_NAME}Config.cmake" @ONLY)
 # ... for both
-configure_file(${PROJECT_SOURCE_DIR}/cmake/ProjectConfigVersion.cmake.in
+configure_file(${CUPID_DIR}/src/ProjectConfigVersion.cmake.in
     "${PROJECT_BINARY_DIR}/${PROJECT_NAME}ConfigVersion.cmake" @ONLY)
 
 # Install the ${PROJECT_NAME}Config.cmake and ${PROJECT_NAME}ConfigVersion.cmake
