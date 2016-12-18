@@ -47,12 +47,7 @@ Note that dependencies are installed only if `DEPENDENCY_INSTALL_<dependency_nam
 `find_project_dependencies()` defines the following variables:
 `${PROJECT_NAME}_DEPENDENCIES_INCLUDE_DIRS`, `${PROJECT_NAME}_DEPENDENCIES_LIBRARY_DIRS` and `${PROJECT_NAME}_DEPENDENCIES_LIBRARIES`
 
-You then need to make use of these variables as appropriate, e.g.:
-```cmake
-include_directories(${${PROJECT_NAME}_DEPENDENCIES_INCLUDE_DIRS})
-link_directories(${${PROJECT_NAME}_DEPENDENCIES_LIBRARY_DIRS})
-target_link_libraries(<your_executable> ${${PROJECT_NAME}_DEPENDENCIES_LIBRARIES})
-```
+You don't then need to make explicit use of these variables (i.e. `include_directories` and `link_directories` is already called)
 
 After providing instructions to compile your project, you can use the following script to properly install it
 ```cmake

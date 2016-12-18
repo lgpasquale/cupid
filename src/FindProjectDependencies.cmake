@@ -117,4 +117,11 @@ macro(FIND_PROJECT_DEPENDENCIES)
         endif()
     endforeach()
 
+    # Use the dependencies found
+    include_directories(SYSTEM ${${PROJECT_NAME}_DEPENDENCIES_INCLUDE_DIRS})
+    link_directories(${${PROJECT_NAME}_DEPENDENCIES_LIBRARY_DIRS})
+    set(LIBRARIES
+        ${${PROJECT_NAME}_DEPENDENCIES_LIBRARIES}
+        CACHE INTERNAL "")
+
 endmacro()

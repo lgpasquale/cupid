@@ -18,6 +18,9 @@ include(${CMAKE_CURRENT_LIST_DIR}/AddProjectDependency.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/InstallProjectDependencies.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/FindProjectDependencies.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/InstallFilesWithDirectoryStructure.cmake)
+include(${CMAKE_CURRENT_LIST_DIR}/AddProjectExecutable.cmake)
+include(${CMAKE_CURRENT_LIST_DIR}/AddProjectTestExecutable.cmake)
+include(${CMAKE_CURRENT_LIST_DIR}/AddProjectLibrary.cmake)
 
 #================================
 # Dependencies
