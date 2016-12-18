@@ -1,12 +1,13 @@
 macro(INSTALL_PROJECT_DEPENDENCIES)
     message(STATUS "Installing dependencies")
 
+    option(DEPENDENCIES_ENABLE_INSTALLATION "Enable installation of dependencies" ON)
     foreach(DEPENDENCY_NAME ${${PROJECT_NAME}_DEPENDENCIES})
         #================================
         # Install the dependency
         #================================
         option(DEPENDENCIES_INSTALL_${DEPENDENCY_NAME} "Install ${DEPENDENCY_NAME}" ON)
-        if(DEPENDENCIES_INSTALL_${DEPENDENCY_NAME})
+        if(DEPENDENCIES_INSTALL_${DEPENDENCY_NAME} AND DEPENDENCIES_ENABLE_INSTALLATION)
             set(DEPENDENCY_ARCHIVE_DIR "${DEPENDENCIES_ARCHIVE_DIR}")
             set(DEPENDENCY_BASE_DIR "${DEPENDENCIES_INSTALL_DIR}/${DEPENDENCY_NAME}")
             set(DEPENDENCY_INSTALL_DIR "${DEPENDENCY_BASE_DIR}/install")
