@@ -19,8 +19,6 @@ mark_as_advanced(DEPENDENCIES_INSTALL_DIR)
 # If there is an Add${DEPENDENCY_NAME}Dependencies.cmake file, use it to add dependecies
 # (such a file should itself call this function)
 set(DEPENDENCY_ADDDEPENDENCIES_SCRIPT "")
-# Find the script providing instructions on how to bundle libraries, binaries, ... into this installation
-set(DEPENDENCY_ADDDEPENDENCIES_SCRIPT "")
 # First look in the project specific directories
 foreach(DEPENDECIES_INSTALL_SCRIPTS_DIR ${DEPENDENCIES_INSTALL_SCRIPTS_DIRS})
     if(EXISTS "${DEPENDENCIES_INSTALL_SCRIPTS_DIR}/Add${DEPENDENCY_NAME}Dependencies.cmake")
@@ -35,7 +33,7 @@ if("${DEPENDENCY_ADDDEPENDENCIES_SCRIPT}" STREQUAL "")
     endif()
 endif()
 
-# If we have found the bundle script, include it
+# If we have found the script, include it
 if(NOT "${DEPENDENCY_ADDDEPENDENCIES_SCRIPT}" STREQUAL "")
     message(STATUS "    ==> Adding dependencies of ${DEPENDENCY_NAME}")
     include("${DEPENDENCY_ADDDEPENDENCIES_SCRIPT}")
