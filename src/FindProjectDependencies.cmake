@@ -92,9 +92,9 @@ macro(FIND_PROJECT_DEPENDENCIES)
 
         # Some libraries have a USE_FILE which needs to be included
         if(DEFINED ${DEPENDENCY_NAME}_USE_FILE)
-            set(${PROJECT_NAME}_DEPENDENCIES_PROVIDING_USE_FILES
-                ${${PROJECT_NAME}_DEPENDENCIES_PROVIDING_USE_FILES}
-                ${DEPENDENCY_NAME})
+            set(${PROJECT_NAME}_DEPENDENCIES_USE_FILES
+                ${${PROJECT_NAME}_DEPENDENCIES_USE_FILES}
+                ${${DEPENDENCY_NAME}_USE_FILE})
             include(${${DEPENDENCY_NAME}_USE_FILE})
         endif()
 
@@ -109,10 +109,10 @@ macro(FIND_PROJECT_DEPENDENCIES)
                 ${${DEPENDENCY_NAME}_DEPENDENCIES_LIBRARY_DIRS}
                 CACHE INTERNAL "")
         endif()
-        if(DEFINED ${DEPENDENCY_NAME}_DEPENDENCIES_PROVIDING_USE_FILES)
-            set(${PROJECT_NAME}_DEPENDENCIES_PROVIDING_USE_FILES
-                ${${PROJECT_NAME}_DEPENDENCIES_PROVIDING_USE_FILES}
-                ${${DEPENDENCY_NAME}_DEPENDENCIES_PROVIDING_USE_FILES}
+        if(DEFINED ${DEPENDENCY_NAME}_DEPENDENCIES_USE_FILES)
+            set(${PROJECT_NAME}_DEPENDENCIES_USE_FILES
+                ${${PROJECT_NAME}_DEPENDENCIES_USE_FILES}
+                ${${DEPENDENCY_NAME}_DEPENDENCIES_USE_FILES}
                 CACHE INTERNAL "")
         endif()
     endforeach()
