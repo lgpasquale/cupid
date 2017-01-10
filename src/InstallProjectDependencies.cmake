@@ -21,7 +21,7 @@ macro(INSTALL_PROJECT_DEPENDENCIES)
                 # Find the script providing instructions on how to install this dependency
                 set(DEPENDENCY_INSTALL_SCRIPT "")
                 # First look in the project specific additional directories
-                foreach(DEPENDECIES_INSTALL_SCRIPTS_DIR ${DEPENDENCIES_INSTALL_SCRIPTS_DIRS})
+                foreach(DEPENDENCIES_INSTALL_SCRIPTS_DIR ${DEPENDENCIES_INSTALL_SCRIPTS_DIRS})
                     if(EXISTS "${DEPENDENCIES_INSTALL_SCRIPTS_DIR}/Install${DEPENDENCY_NAME}.cmake")
                         set(DEPENDENCY_INSTALL_SCRIPT
                             "${DEPENDENCIES_INSTALL_SCRIPTS_DIR}/Install${DEPENDENCY_NAME}.cmake")
@@ -113,7 +113,7 @@ macro(INSTALL_PROJECT_DEPENDENCIES)
         # Find the script providing instructions on how to bundle libraries, binaries, ... into this installation
         set(DEPENDENCY_BUNDLE_SCRIPT "")
         # First look in the project specific directories
-        foreach(DEPENDECIES_INSTALL_SCRIPTS_DIR ${DEPENDENCIES_INSTALL_SCRIPTS_DIRS})
+        foreach(DEPENDENCIES_INSTALL_SCRIPTS_DIR ${DEPENDENCIES_INSTALL_SCRIPTS_DIRS})
             if(EXISTS "${DEPENDENCIES_INSTALL_SCRIPTS_DIR}/Bundle${DEPENDENCY_NAME}.cmake")
                 set(DEPENDENCY_BUNDLE_SCRIPT
                     "${DEPENDENCIES_INSTALL_SCRIPTS_DIR}/Bundle${DEPENDENCY_NAME}.cmake")
