@@ -15,6 +15,8 @@ They provide:
 
 ## Basic usage
 
+### Creating a project
+
 Include this project somewhere in your source tree. If you are using git you can add this repository as a git submodule.
 
 First you need to include `SetUpProject.cmake`. Assuming the contents of this repository are availabe at `${CMAKE_CURRENT_SOURCE_DIR}/cmake`:
@@ -53,6 +55,17 @@ After providing instructions to compile your project, you can use the following 
 ```cmake
 include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/InstallProject.cmake)
 ```
+
+### Using a project
+
+When configuring a project that uses CUPID, you can set the following (optional) CMake variables to manage dependencies:
+- `DEPENDENCIES_ENABLE_INSTALLATION`: `BOOL` if set to OFF dependencies are not installed
+- `DEPENDENCIES_INSTALL_<dependency_name>`: `BOOL` if set to OFF the given dependency won't be installed. It must be already installed. CMake will try to find it in the default system paths, but its location can optionally be set via the `DEPENDENCIES_<dependency_name>_DIR` variable
+- `DEPENDENCIES_<dependency_name>_DIR`: `PATH` where the given dependency can be found if its installation is disabled (either by setting `DEPENDENCIES_INSTALL_<dependency_name>` to OFF or by disabling all installations by `DEPENDENCIES_ENABLE_INSTALLATION` ot OFF)
+- `DEPENDENCIES_ARCHIVE_DIR`: `PATH` where dependencies source archives can be found. If the archives are found in this directory they won't be downloaded again. Defaults to `${CUPID_DIR}/dependencies/src`
+- `DEPENDENCIES_INSTALL_DIR`: `PATH` where dependencies will be installed. Defaults to `${CMAKE_BINARY_DIR}/dependencies`
+
+These variables can be set either when invoking cmake via the command line (e.g.: `cmake -D DEPENDENCIES_INSTALL_DIR=/where/you/want/them/installed path/to/source/dir`) or by using its GUI.
 
 ## Adding support for other dependencies
 
