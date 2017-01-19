@@ -8,13 +8,14 @@ macro(INSTALL_PROJECT_DEPENDENCIES)
         #================================
         option(DEPENDENCIES_INSTALL_${DEPENDENCY_NAME} "Install ${DEPENDENCY_NAME}" ON)
         if(DEPENDENCIES_INSTALL_${DEPENDENCY_NAME} AND DEPENDENCIES_ENABLE_INSTALLATION)
-            set(DEPENDENCY_ARCHIVE_DIR "${DEPENDENCIES_ARCHIVE_DIR}")
+            set(DEPENDENCY_ARCHIVE_DIR "${DEPENDENCIES_ARCHIVE_DIR}/${DEPENDENCY_NAME}")
             set(DEPENDENCY_BASE_DIR "${DEPENDENCIES_INSTALL_DIR}/${DEPENDENCY_NAME}")
             set(DEPENDENCY_INSTALL_DIR "${DEPENDENCY_BASE_DIR}/install")
             if("${DEPENDENCIES_${DEPENDENCY_NAME}_DIR}" STREQUAL "")
                 set(DEPENDENCIES_${DEPENDENCY_NAME}_DIR "${DEPENDENCY_INSTALL_DIR}"
                     CACHE PATH "${DEPENDENCY_NAME} installation base directory")
             endif()
+            file(MAKE_DIRECTORY "${DEPENDENCY_ARCHIVE_DIR}")
 
             if (NOT EXISTS "${DEPENDENCY_BASE_DIR}/installation_completed.cupid")
                 message(STATUS "    ==> Installing ${DEPENDENCY_NAME}")
@@ -62,9 +63,9 @@ macro(INSTALL_PROJECT_DEPENDENCIES)
                     execute_process(COMMAND ${CMAKE_COMMAND} .
                         -G${CMAKE_GENERATOR}
                         -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
-                        -DPROJECT_ARCHIVE_DIR=${DEPENDENCY_ARCHIVE_DIR}
-                        -DPROJECT_BASE_DIR=${DEPENDENCY_BASE_DIR}
-                        -DPROJECT_INSTALL_DIR=${DEPENDENCY_INSTALL_DIR}
+                        -DDEPENDENCY_ARCHIVE_DIR=${DEPENDENCY_ARCHIVE_DIR}
+                        -DDEPENDENCY_BASE_DIR=${DEPENDENCY_BASE_DIR}
+                        -DDEPENDENCY_INSTALL_DIR=${DEPENDENCY_INSTALL_DIR}
                         -DDEPENDENCIES_ARCHIVE_DIR=${DEPENDENCIES_ARCHIVE_DIR}
                         -DDEPENDENCIES_INSTALL_DIR=${DEPENDENCIES_INSTALL_DIR}
                         -DDEPENDENCIES_INSTALL_SCRIPTS_DIRS=${DEPENDENCIES_INSTALL_SCRIPTS_DIRS}

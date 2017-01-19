@@ -23,11 +23,11 @@ ExternalProject_Add(
     Boost
     URL "https://downloads.sourceforge.net/project/boost/boost/${Boost_VERSION}/boost_${Boost_UNDERSCORED_VERSION}.tar.bz2"
     URL_MD5 "5fb94629535c19e48703bdb2b2e9490f"
-    DOWNLOAD_DIR ${PROJECT_ARCHIVE_DIR}
-    PREFIX ${PROJECT_BASE_DIR}
+    DOWNLOAD_DIR ${DEPENDENCY_ARCHIVE_DIR}
+    PREFIX ${DEPENDENCY_BASE_DIR}
     CONFIGURE_COMMAND ${Boost_BOOTSTRAP_COMMAND}
     BUILD_COMMAND ${Boost_B2_COMMAND}
-        --prefix=${PROJECT_INSTALL_DIR}
+        --prefix=${DEPENDENCY_INSTALL_DIR}
         --variant=release
         -j ${PROCESSOR_COUNT}
         ${COMPONENTS_OPTIONS}
