@@ -14,11 +14,11 @@ macro(FIND_PROJECT_DEPENDENCIES)
         message(STATUS "    ==> Looking for ${DEPENDENCY_NAME}")
 
         # CMAKE_PREFIX_PATH is where find_package, find_library and find_file
-        # look for files. We set this to the user defined DEPENDENCY_<package>_DIR
+        # look for files. We set this to the user defined DEPENDENCIES_<package>_DIR
         # so that system installations of the library don't prevail (we later restore it to its original value)
         set(ENV_CMAKE_PREFIX_PATH ${CMAKE_PREFIX_PATH})
-        set(DEPENDENCY_${DEPENDENCY_NAME}_DIR "" CACHE PATH "${DEPENDENCY_NAME} installation base directory")
-        set(CMAKE_PREFIX_PATH ${DEPENDENCY_${DEPENDENCY_NAME}_DIR})
+        set(DEPENDENCIES_${DEPENDENCY_NAME}_DIR "" CACHE PATH "${DEPENDENCY_NAME} installation base directory")
+        set(CMAKE_PREFIX_PATH ${DEPENDENCIES_${DEPENDENCY_NAME}_DIR})
 
         set(DEPENDENCY_FIND_SCRIPT "")
         # First look in the project specific additional directories
@@ -38,17 +38,19 @@ macro(FIND_PROJECT_DEPENDENCIES)
         # If we have found the script, use it to find the dependency, otherwise
         # rely on find_package()
         if(NOT "${DEPENDENCY_FIND_SCRIPT}" STREQUAL "")
+            set(DEPENDENCY_COMPONENTS ${DEPENDENCY_${DEPENDENCY_NAME}_COMPONENTS})
+            set(DEPENDENCY_OPTIONAL_COMPONENTS ${DEPENDENCY_${DEPENDENCY_NAME}_OPTIONAL_COMPONENTS})
             include(${DEPENDENCY_FIND_SCRIPT})
         else()
             find_package(${DEPENDENCY_NAME} QUIET COMPONENTS ${DEPENDENCY_${DEPENDENCY_NAME}_COMPONENTS} ${DEPENDENCY_${DEPENDENCY_NAME}_OPTIONAL_COMPONENTS})
         endif()
 
-        # We want the user to use DEPENDENCY_${DEPENDENCY_NAME}_DIR, and not ${DEPENDENCY_NAME}_DIR,
+        # We want the user to use DEPENDENCIES_${DEPENDENCY_NAME}_DIR, and not ${DEPENDENCY_NAME}_DIR,
         # which is set by find_package
         mark_as_advanced(${DEPENDENCY_NAME}_DIR)
 
         if(NOT ${DEPENDENCY_NAME}_FOUND)
-            message(FATAL_ERROR "${DEPENDENCY_NAME} not found. Try setting DEPENDENCY_${DEPENDENCY_NAME}_DIR to the installation path of ${DEPENDENCY_NAME}")
+            message(FATAL_ERROR "${DEPENDENCY_NAME} not found. Try setting DEPENDENCIES_${DEPENDENCY_NAME}_DIR to the installation path of ${DEPENDENCY_NAME}")
         endif()
 
         # Restore CMAKE_PREFIX_PATH to its original value

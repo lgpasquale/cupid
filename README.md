@@ -82,5 +82,7 @@ If nothing needs to be bundled, this file is not needed.
 ### `Find<dependency_name>.cmake`
 This script is only needed if the dependency does not provide its own '<dependency_name>Config.cmake' file and it is not supported by any of the cmake 'Find<dependency_name>.cmake' modules.
 This script should rely on `${DEPENDENCIES_${DEPENDENCY_NAME}_DIR}` and can assume that `${CMAKE_PREFIX_PATH}` has already been set to that path.
+It can also rely on the variables `DEPENDENCY_COMPONENTS` and `DEPENDENCY_OPTIONAL_COMPONENTS` to know thich components it has to find.
+
 If the package is found, it should set the variable `${DEPENDENCY_NAME}_FOUND` to `ON` and should set `${DEPENDENCY_NAME}_INCLUDE_DIRS`, `${DEPENDENCY_NAME}_LIBRARY_DIRS` and `${DEPENDENCY_NAME}_LIBRARIES` appropriately.
 

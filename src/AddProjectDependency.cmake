@@ -35,7 +35,7 @@ endif()
 
 # If we have found the script, include it
 if(NOT "${DEPENDENCY_ADDDEPENDENCIES_SCRIPT}" STREQUAL "")
-    message(STATUS "    ==> Adding dependencies of ${DEPENDENCY_NAME}")
+    message(STATUS "Adding dependencies of ${DEPENDENCY_NAME}")
     include("${DEPENDENCY_ADDDEPENDENCIES_SCRIPT}")
 endif()
 

@@ -8,15 +8,14 @@ endif()
 
 include(@DEPENDENCY_INSTALL_SCRIPT@)
 
-# Export all DEPENDENCY_*_DIR variables
+# Export all DEPENDENCIES_*_DIR variables
 # (first create the file, so that even if no variable is exported the file exists anyway and can be loaded)
 file(WRITE ${CMAKE_BINARY_DIR}/output_variables.cmake "")
 get_cmake_property(VARIABLE_NAMES CACHE_VARIABLES)
 foreach(VARIABLE_NAME ${VARIABLE_NAMES})
     message(STATUS "${VARIABLE_NAME}")
-    if("${VARIABLE_NAME}" MATCHES "^DEPENDENCY_.*_DIR$")
-        message(STATUS "    MATCH!!!")
-        string(REGEX REPLACE "DEPENDENCY_(.*)_DIR" "\\1" DEPENDENCY_NAME ${VARIABLE_NAME})
+    if("${VARIABLE_NAME}" MATCHES "^DEPENDENCIES_.*_DIR$")
+        string(REGEX REPLACE "DEPENDENCIES_(.*)_DIR" "\\1" DEPENDENCY_NAME ${VARIABLE_NAME})
         # Retrieve the description of this variable
         #get_property(VARIABLE_HELPSTRING CACHE ${VARIABLE_NAME} PROPERTY HELPSTRING)
         file(APPEND ${CMAKE_BINARY_DIR}/output_variables.cmake "set(${VARIABLE_NAME} \"${${VARIABLE_NAME}}\" CACHE PATH \"${DEPENDENCY_NAME} installation base directory\")\n")

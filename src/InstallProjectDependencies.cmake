@@ -12,7 +12,7 @@ macro(INSTALL_PROJECT_DEPENDENCIES)
             set(DEPENDENCY_BASE_DIR "${DEPENDENCIES_INSTALL_DIR}/${DEPENDENCY_NAME}")
             set(DEPENDENCY_INSTALL_DIR "${DEPENDENCY_BASE_DIR}/install")
             if("${DEPENDENCIES_${DEPENDENCY_NAME}_DIR}" STREQUAL "")
-                set(DEPENDENCY_${DEPENDENCY_NAME}_DIR "${DEPENDENCY_INSTALL_DIR}"
+                set(DEPENDENCIES_${DEPENDENCY_NAME}_DIR "${DEPENDENCY_INSTALL_DIR}"
                     CACHE PATH "${DEPENDENCY_NAME} installation base directory")
             endif()
 
@@ -50,11 +50,11 @@ macro(INSTALL_PROJECT_DEPENDENCIES)
                     if(PROCESSOR_COUNT EQUAL 0)
                         set(PROCESSOR_COUNT 1)
                     endif()
-                    # Pass to the child cmake process all DEPENDENCY_*_DIR variables
+                    # Pass to the child cmake process all DEPENDENCIES_*_DIR variables
                     set(INPUT_VARIABLES "")
                     get_cmake_property(VARIABLE_NAMES CACHE_VARIABLES)
                     foreach(VARIABLE_NAME ${VARIABLE_NAMES})
-                        if("${VARIABLE_NAME}" MATCHES "^DEPENDENCY_.*_DIR$")
+                        if("${VARIABLE_NAME}" MATCHES "^DEPENDENCIES_.*_DIR$")
                             list(APPEND INPUT_VARIABLES "-D${VARIABLE_NAME}=${${VARIABLE_NAME}}")
                         endif()
                     endforeach()
@@ -91,7 +91,7 @@ macro(INSTALL_PROJECT_DEPENDENCIES)
                     if(NOT ${PROCESS_RESULT} EQUAL 0)
                         message(FATAL_ERROR "Error building ${DEPENDENCY_NAME}. Check: ${BUILD_PROCESS_OUTPUT_FILE}")
                     endif()
-                    # Retrieve all DEPENDENCY_*_DIR variables
+                    # Retrieve all DEPENDENCIES_*_DIR variables
                     include(${DEPENDENCY_SUPERBUILD_DIR}/output_variables.cmake)
                 else()
                     message(FATAL_ERROR "Cannot find Install${DEPENDENCY_NAME}.cmake. Try setting DEPENDENCIES_INSTALL_SCRIPTS_DIRS to a directory providing this file")
