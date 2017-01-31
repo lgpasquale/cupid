@@ -19,6 +19,16 @@ foreach(COMPONENT ${COMPONENTS})
     set(COMPONENTS_OPTIONS ${COMPONENTS_OPTIONS} "--with-${COMPONENT}")
 endforeach()
 
+set(COMPILER_FLAGS_OPTIONS "")
+get_cmake_property(VARIABLE_NAMES CACHE_VARIABLES)
+foreach(VARIABLE_NAME ${VARIABLE_NAMES})
+    if ("${VARIABLE_NAME}" MATCHES "^CMAKE_CX*X*_FLAGS.*")
+        if ("${${VARIABLE_NAME}}" MATCHES "_GLIBCXX_DEBUG")
+            set(COMPILER_FLAGS_OPTIONS "cxxflags=-D_GLIBCXX_DEBUG")
+        endif()
+    endif()
+endforeach()
+
 ExternalProject_Add(
     Boost
     URL "https://downloads.sourceforge.net/project/boost/boost/${Boost_VERSION}/boost_${Boost_UNDERSCORED_VERSION}.tar.bz2"
@@ -29,6 +39,7 @@ ExternalProject_Add(
     BUILD_COMMAND ${Boost_B2_COMMAND}
         --prefix=${DEPENDENCY_INSTALL_DIR}
         --variant=release
+        ${COMPILER_FLAGS_OPTIONS}
         -j ${PROCESSOR_COUNT}
         ${COMPONENTS_OPTIONS}
         install

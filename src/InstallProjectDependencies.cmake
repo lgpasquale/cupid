@@ -52,10 +52,14 @@ macro(INSTALL_PROJECT_DEPENDENCIES)
                         set(PROCESSOR_COUNT 1)
                     endif()
                     # Pass to the child cmake process all DEPENDENCIES_*_DIR variables
+                    # and all the compiler flags
                     set(INPUT_VARIABLES "")
                     get_cmake_property(VARIABLE_NAMES CACHE_VARIABLES)
                     foreach(VARIABLE_NAME ${VARIABLE_NAMES})
                         if("${VARIABLE_NAME}" MATCHES "^DEPENDENCIES_.*_DIR$")
+                            list(APPEND INPUT_VARIABLES "-D${VARIABLE_NAME}=${${VARIABLE_NAME}}")
+                        endif()
+                        if ("${VARIABLE_NAME}" MATCHES "^CMAKE_CX*X*_FLAGS.*")
                             list(APPEND INPUT_VARIABLES "-D${VARIABLE_NAME}=${${VARIABLE_NAME}}")
                         endif()
                     endforeach()
@@ -63,6 +67,7 @@ macro(INSTALL_PROJECT_DEPENDENCIES)
                     execute_process(COMMAND ${CMAKE_COMMAND} .
                         -G${CMAKE_GENERATOR}
                         -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
+                        -DCMAKE_CXX_FLAGS=${CMAKE_CXX_FLAGS}
                         -DDEPENDENCY_ARCHIVE_DIR=${DEPENDENCY_ARCHIVE_DIR}
                         -DDEPENDENCY_BASE_DIR=${DEPENDENCY_BASE_DIR}
                         -DDEPENDENCY_INSTALL_DIR=${DEPENDENCY_INSTALL_DIR}
