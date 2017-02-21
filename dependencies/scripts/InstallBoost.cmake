@@ -39,6 +39,7 @@ ExternalProject_Add(
     BUILD_COMMAND ${Boost_B2_COMMAND}
         --prefix=${DEPENDENCY_INSTALL_DIR}
         --variant=release
+        --layout=system
         ${COMPILER_FLAGS_OPTIONS}
         -j ${PROCESSOR_COUNT}
         ${COMPONENTS_OPTIONS}
