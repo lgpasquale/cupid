@@ -1,6 +1,7 @@
 macro(ADD_PROJECT_DEPENDENCY DEPENDENCY_NAME)
 
 include(ExternalProject)
+include(CMakeParseArguments)
 
 if(NOT DEFINED DEPENDENCIES_ARCHIVE_DIR)
     set(DEPENDENCIES_ARCHIVE_DIR "${CUPID_DIR}/dependencies/src" CACHE PATH
