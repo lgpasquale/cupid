@@ -1,0 +1,61 @@
+set(COMPILER_FLAGS_OPTIONS "")
+get_cmake_property(VARIABLE_NAMES CACHE_VARIABLES)
+foreach(VARIABLE_NAME ${VARIABLE_NAMES})
+    if ("${VARIABLE_NAME}" MATCHES "^CMAKE_CX*X*_FLAGS.*")
+        if ("${${VARIABLE_NAME}}" MATCHES "_GLIBCXX_DEBUG")
+            set(COMPILER_FLAGS "-D_GLIBCXX_DEBUG")
+        endif()
+    endif()
+endforeach()
+
+set(AVAILABLE_COMPONENTS
+    APACHECONNECTOR
+    CPPPARSER
+    Crypto
+    Data
+    Data_MySQL
+    Data_ODBC
+    Data_SQLite
+    JSON
+    MongoDB
+    Net
+    NetSSL
+    PageCompiler
+    PageCompiler_File2Page
+    PDF
+    Util
+    XML
+    Zip
+    )
+
+set(COMPONENTS_OPTION)
+# Enable only required components
+foreach(COMPONENT ${AVAILABLE_COMPONENTS})
+    string(TOUPPER ${COMPONENT} UPPERCASE_COMPONENT)
+    list(FIND COMPONENTS "${COMPONENT}" _index)
+    if(${_index} GREATER -1)
+        set(COMPONENT_OPTIONS ${COMPONENT_OPTIONS} "-DENABLE_${UPPERCASE_COMPONENT}:BOOL=ON")
+    else()
+        set(COMPONENT_OPTIONS ${COMPONENT_OPTIONS} "-DENABLE_${UPPERCASE_COMPONENT}:BOOL=OFF")
+    endif()
+endforeach()
+
+ExternalProject_Add(
+    Poco
+    URL "https://pocoproject.org/releases/poco-1.7.8/poco-1.7.8-all.tar.gz"
+    URL_MD5 "352f2f33e2100e686202ea0ced80f2e0"
+    DOWNLOAD_DIR ${DEPENDENCY_ARCHIVE_DIR}
+    PREFIX ${DEPENDENCY_BASE_DIR}
+    CMAKE_CACHE_ARGS "-DCMAKE_INSTALL_PREFIX:PATH=${DEPENDENCY_INSTALL_DIR}"
+    "-DCMAKE_BUILD_TYPE:STRING=${CMAKE_BUILD_TYPE}"
+    "-DCMAKE_CXX_FLAGS:STRING=${COMPILER_FLAGS}"
+    ${COMPONENT_OPTIONS}
+    "-DENABLE_APACHECONNECTOR:BOOL=OFF"
+    "-DENABLE_CPPPARSER:BOOL=OFF"
+    "-DENABLE_TESTS:BOOL=OFF"
+    "-DENABLE_POCODOC:BOOL=OFF"
+    "-DENABLE_SEVENZIP:BOOL=OFF"
+    "-DENABLE_NETSSL_WIN:BOOL=OFF"
+    "-DPOCO_STATIC:BOOL=ON"
+)
+
