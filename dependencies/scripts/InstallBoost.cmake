@@ -40,12 +40,12 @@ ExternalProject_Add(
         --prefix=${DEPENDENCY_INSTALL_DIR}
         --variant=release
         address-model=64
-        link=static
-        runtime-link=static
         --layout=tagged
         ${COMPILER_FLAGS_OPTIONS}
         -j ${PROCESSOR_COUNT}
         ${COMPONENTS_OPTIONS}
+        link=static
+        runtime-link=static
         install
     BUILD_IN_SOURCE 1
     INSTALL_COMMAND
