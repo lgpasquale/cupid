@@ -43,8 +43,10 @@ macro(INSTALL_PROJECT_DEPENDENCIES)
                     set(CONFIGURE_PROCESS_OUTPUT_FILE "${DEPENDENCY_SUPERBUILD_DIR}/configure_process.log")
                     set(BUILD_PROCESS_OUTPUT_FILE "${DEPENDENCY_SUPERBUILD_DIR}/build_process.log")
                     # If we don't escape ';', cmake will expand the list using spaces to separate values
-                    string(REPLACE ";" "\;" ESCAPED_DEPENDENCY_COMPONENTS "${DEPENDENCY_COMPONENTS}")
-                    string(REPLACE ";" "\;" ESCAPED_DEPENDENCY_OPTIONAL_COMPONENTS "${DEPENDENCY_OPTIONAL_COMPONENTS}")
+                    string(REPLACE ";" "\;" ESCAPED_DEPENDENCY_COMPONENTS
+                        "${DEPENDENCY_${DEPENDENCY_NAME}_COMPONENTS}")
+                    string(REPLACE ";" "\;" ESCAPED_DEPENDENCY_OPTIONAL_COMPONENTS
+                        "${DEPENDENCY_${DEPENDENCY_NAME}_OPTIONAL_COMPONENTS}")
                     # Find how many processors are available for the build
                     include(ProcessorCount)
                     ProcessorCount(PROCESSOR_COUNT)
