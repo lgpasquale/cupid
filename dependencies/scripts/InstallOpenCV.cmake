@@ -12,7 +12,7 @@ ExternalProject_Add(
     CMAKE_CACHE_ARGS "-DCMAKE_INSTALL_PREFIX:PATH=${DEPENDENCY_INSTALL_DIR}"
         "${PRECOMPILED_HEADERS_OPTION}"
     BUILD_COMMAND
-        ${CMAKE_COMMAND} --build . --config {CMAKE_BUILD_TYPE}
+        ${CMAKE_COMMAND} --build . --config ${CMAKE_BUILD_TYPE}
     INSTALL_COMMAND
         ${CMAKE_COMMAND} --build . --config ${CMAKE_BUILD_TYPE} --target install
 
