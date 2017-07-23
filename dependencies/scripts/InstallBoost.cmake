@@ -19,12 +19,13 @@ foreach(COMPONENT ${COMPONENTS})
     set(COMPONENTS_OPTIONS ${COMPONENTS_OPTIONS} "--with-${COMPONENT}")
 endforeach()
 
-set(COMPILER_FLAGS_OPTIONS "")
+set(COMPILER_FLAGS "")
 get_cmake_property(VARIABLE_NAMES CACHE_VARIABLES)
 foreach(VARIABLE_NAME ${VARIABLE_NAMES})
-    if ("${VARIABLE_NAME}" MATCHES "^CMAKE_CX*X*_FLAGS.*")
+    if ("${VARIABLE_NAME}" MATCHES "^CMAKE_CX*X*_FLAGS_${UPPERCASE_BUILD_TYPE}" OR
+        "${VARIABLE_NAME}" MATCHES "^CMAKE_CX*X*_FLAGS")
         if ("${${VARIABLE_NAME}}" MATCHES "_GLIBCXX_DEBUG")
-            set(COMPILER_FLAGS_OPTIONS "cxxflags=-D_GLIBCXX_DEBUG")
+            set(COMPILER_FLAGS "cxxflags=-D_GLIBCXX_DEBUG")
         endif()
     endif()
 endforeach()
@@ -41,7 +42,7 @@ ExternalProject_Add(
         --variant=release
         address-model=64
         --layout=tagged
-        ${COMPILER_FLAGS_OPTIONS}
+        ${COMPILER_FLAGS}
         -j ${PROCESSOR_COUNT}
         ${COMPONENTS_OPTIONS}
         link=static
