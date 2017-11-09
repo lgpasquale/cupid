@@ -14,11 +14,17 @@ else()
     endif()
 endif()
 
+set(LAYOUT_OPTION "--layout=system")
+if(MSVC)
+    set(LAYOUT_OPTION "--layout=tagged")
+endif()
+
 message(STATUS "COMPONENTS: ${COMPONENTS}")
 foreach(COMPONENT ${COMPONENTS})
     set(COMPONENTS_OPTIONS ${COMPONENTS_OPTIONS} "--with-${COMPONENT}")
 endforeach()
 
+string(TOUPPER "${CMAKE_BUILD_TYPE}" UPPERCASE_BUILD_TYPE)
 set(COMPILER_FLAGS "")
 get_cmake_property(VARIABLE_NAMES CACHE_VARIABLES)
 foreach(VARIABLE_NAME ${VARIABLE_NAMES})
@@ -41,7 +47,7 @@ ExternalProject_Add(
         --prefix=${DEPENDENCY_INSTALL_DIR}
         --variant=release
         address-model=64
-        --layout=tagged
+        ${LAYOUT_OPTION}
         ${COMPILER_FLAGS}
         -j ${PROCESSOR_COUNT}
         ${COMPONENTS_OPTIONS}
