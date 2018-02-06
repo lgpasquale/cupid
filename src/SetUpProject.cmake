@@ -81,3 +81,23 @@ set(CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/${PROJECT_LIB_INSTALL_DIR}")
 #================================
 set(${PROJECT_NAME}_LIBRARIES "" CACHE INTERNAL "")
 set(LIBRARIES "" CACHE INTERNAL "")
+
+#================================
+# Create archive target
+#================================
+set(TEMP_ARCHIVE_DIR ${CMAKE_BINARY_DIR}/archive-temp/${PROJECT_NAME})
+add_custom_target(create_archive_dir
+    COMMAND ${CMAKE_COMMAND} -E make_directory ${TEMP_ARCHIVE_DIR}
+    COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR} ${TEMP_ARCHIVE_DIR}
+    COMMAND ${CMAKE_COMMAND} -E make_directory ${TEMP_ARCHIVE_DIR}/cupid
+    COMMAND ${CMAKE_COMMAND} -E copy_directory ${CUPID_DIR} ${TEMP_ARCHIVE_DIR}/cupid
+    COMMAND ${CMAKE_COMMAND} -E remove_directory ${TEMP_ARCHIVE_DIR}/.git
+    COMMAND ${CMAKE_COMMAND} -E remove_directory ${TEMP_ARCHIVE_DIR}/.hg
+    )
+
+add_custom_target(archive
+    DEPENDS create_archive_dir
+    WORKING_DIRECTORY ${TEMP_ARCHIVE_DIR}/..
+    COMMAND ${CMAKE_COMMAND} -E tar cfz ${CMAKE_BINARY_DIR}/${PROJECT_NAME}.tar.gz ${TEMP_ARCHIVE_DIR}
+    COMMAND ${CMAKE_COMMAND} -E remove_directory ${TEMP_ARCHIVE_DIR}
+    )
